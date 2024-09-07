@@ -1423,3 +1423,10 @@ def FeatureForcedSWShadowStack : SubtargetFeature<
     "forced-sw-shadow-stack", "HasForcedSWShadowStack", "true",
     "Implement shadow stack with software.">;
 def HasForcedSWShadowStack : Predicate<"Subtarget->hasForcedSWShadowStack()">;
+
+// MiGPU Extension
+def FeatureVendorXMiGPU : RISCVExtension<"xmigpu", 1, 0, "'XMiGPU' (Millaker GPU)">;
+def HasVendorXMiGPU
+    : Predicate<"Subtarget->hasVendorXMiGPU()">,
+      AssemblerPredicate<(all_of FeatureVendorXMiGPU),
+                         "'XMiGPU' (Millaker GPU)">;

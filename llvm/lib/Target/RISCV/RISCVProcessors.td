@@ -470,3 +470,11 @@ def RP2350_HAZARD3 : RISCVProcessorModel<"rp2350-hazard3",
                                           FeatureStdExtZbkb,
                                           FeatureStdExtZcb,
                                           FeatureStdExtZcmp]>;
+
+def MIGPU : RISCVProcessorModel<"MiGPU",
+                                NoSchedModel,
+                                [Feature32Bit,
+                                 FeatureStdExtI,
+                                 FeatureStdExtZicsr,
+                                 FeatureStdExtM,
+                                 FeatureVendorXMiGPU]>;

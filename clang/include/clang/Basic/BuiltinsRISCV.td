@@ -146,3 +146,12 @@ let Features = "zihintntl", Attributes = [CustomTypeChecking] in {
 def ntl_load : RISCVBuiltin<"void(...)">;
 def ntl_store : RISCVBuiltin<"void(...)">;
 } // Features = "zihintntl", Attributes = [CustomTypeChecking]
+
+//===----------------------------------------------------------------------===//
+// MiGPU extension.
+//===----------------------------------------------------------------------===//
+let Features = "xmigpu,32bit" in {
+    def mi_split : RISCVBuiltin<"bool(bool)">;
+    def mi_join : RISCVBuiltin<"void()">;
+    def mi_barrier: RISCVBuiltin<"void()">;
+}

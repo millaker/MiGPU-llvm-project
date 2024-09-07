@@ -22403,6 +22403,17 @@ Value *CodeGenFunction::EmitRISCVBuiltinExpr(unsigned BuiltinID,
 #include "clang/Basic/riscv_vector_builtin_cg.inc"
   // SiFive Vector builtins are handled from here.
 #include "clang/Basic/riscv_sifive_vector_builtin_cg.inc"
+
+  // MiGPU builtins
+  case RISCV::BI__builtin_riscv_mi_split: {
+    llvm::Value *Val = EmitScalarExpr(E->getArg(0));
+    llvm::IntegerType *ty = llvm::Type::getInt32Ty(this->getLLVMContext());
+    Val = Builder.CreateIntCast(Val, ty, false);
+    Function *F = CGM.getIntrinsic(Intrinsic::riscv_mi_split);
+    Builder.CreateCall(F, {Val});
+    Val = Builder.CreateIntCast(Val, ResultType, false);
+    return Val;
+  }
   }
 
   assert(ID != Intrinsic::not_intrinsic);

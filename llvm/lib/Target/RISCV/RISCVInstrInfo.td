@@ -2014,6 +2014,7 @@ include "RISCVInstrInfoXSf.td"
 include "RISCVInstrInfoSFB.td"
 include "RISCVInstrInfoXCV.td"
 include "RISCVInstrInfoXwch.td"
+include "RISCVInstrInfoXMiGPU.td"
 
 //===----------------------------------------------------------------------===//
 // Global ISel
