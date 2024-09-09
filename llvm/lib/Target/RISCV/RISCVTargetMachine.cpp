@@ -103,6 +103,11 @@ static cl::opt<bool> EnableVSETVLIAfterRVVRegAlloc(
     cl::desc("Insert vsetvls after vector register allocation"),
     cl::init(true));
 
+static cl::opt<bool>
+    EnableMIGPUBranchAnalysis("migpu-branch-analysis", cl::NotHidden,
+                              cl::desc("Insert split/join pairs when branch"),
+                              cl::init(false));
+
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeRISCVTarget() {
   RegisterTargetMachine<RISCVTargetMachine> X(getTheRISCV32Target());
   RegisterTargetMachine<RISCVTargetMachine> Y(getTheRISCV64Target());
@@ -128,6 +133,7 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeRISCVTarget() {
   initializeRISCVDAGToDAGISelLegacyPass(*PR);
   initializeRISCVMoveMergePass(*PR);
   initializeRISCVPushPopOptPass(*PR);
+  initializeRISCVMIGPUBranchAnalysisPass(*PR);
 }
 
 static StringRef computeDataLayout(const Triple &TT,
@@ -565,13 +571,17 @@ void RISCVPassConfig::addPreRegAlloc() {
     else
       insertPass(&RegisterCoalescerID, &RISCVInsertVSETVLIID);
   }
+
+  if (TM->getTargetCPU() == "MiGPU") {
+    // addPass(createRISCVMIGPUBranchAnalysisPass());
+    insertPass(&PHIEliminationID, &RISCVMIGPUBranchAnalysisID);
+  }
 }
 
 void RISCVPassConfig::addFastRegAlloc() {
   addPass(&InitUndefID);
   TargetPassConfig::addFastRegAlloc();
 }
-
 
 void RISCVPassConfig::addPostRegAlloc() {
   if (TM->getOptLevel() != CodeGenOptLevel::None &&
