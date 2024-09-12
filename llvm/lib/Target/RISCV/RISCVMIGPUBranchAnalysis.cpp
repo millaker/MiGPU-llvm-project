@@ -19,7 +19,7 @@ public:
 
   bool runOnMachineFunction(MachineFunction &MF) override;
 
-  StringRef getPassName() const override { return "RISCVMIGPUBranchAnalysis"; }
+  StringRef getPassName() const override { return "RISC-V MiGPU Branch Analysis Pass"; }
 
   void getAnalysisUsage(AnalysisUsage &AU) const override {
     AU.addRequired<MachinePostDominatorTreeWrapperPass>();

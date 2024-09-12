@@ -573,7 +573,7 @@ void RISCVPassConfig::addPreRegAlloc() {
   }
 
   if (TM->getTargetCPU() == "MiGPU") {
-    // addPass(createRISCVMIGPUBranchAnalysisPass());
+    //addPass(createRISCVMIGPUBranchAnalysisPass());
     insertPass(&PHIEliminationID, &RISCVMIGPUBranchAnalysisID);
   }
 }
