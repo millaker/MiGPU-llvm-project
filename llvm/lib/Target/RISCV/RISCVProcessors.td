@@ -475,6 +475,7 @@ def MIGPU : RISCVProcessorModel<"MiGPU",
                                 NoSchedModel,
                                 [Feature32Bit,
                                  FeatureStdExtI,
+                                 FeatureStdExtF,
                                  FeatureStdExtZicsr,
                                  FeatureStdExtM,
                                  FeatureVendorXMiGPU]>;
